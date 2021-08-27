@@ -1,2 +1,2 @@
 # md2wiki
-Coverts Markdown to wiki pages
+Converts Markdown to wiki pages
