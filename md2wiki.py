@@ -16,18 +16,33 @@ def convert(source_path, target_path):
             counter = 0
             while counter < num_items:
                 add_sign = add_sign + "="
-                counter = counter + 1
+                counter += 1
             line_new = line_new + " " + add_sign
-            # print(line_new)
         elif line.find("- ") > -1:
+            substring = line[0:line.find("- ")]
+            intend_count = int(calculate_indentation(substring))
             line_new = line.replace("- ", "* ")
+
+            counter = 0
+            line_new = line_new[line_new.find("*"):len(line_new)]
+            while counter < intend_count:
+                line_new = "*" + line_new
+                counter += 1
+
             line_new = line_new.replace("\n", "")
-            # print(line_new)
         else:
             line_new = line.replace("\n", "")
-            # print(line_new)
+
         line_new = line_new + " " + "\n"
         f_target.writelines(line_new)
+
+
+def calculate_indentation(substring):
+    if substring.count("  ") % 2 == 0:
+        resulting_blanks = substring.count("  ") / 2
+    else:
+        resulting_blanks = substring.count("  ")
+    return resulting_blanks + substring.count("\t")
 
 
 if __name__ == '__main__':
